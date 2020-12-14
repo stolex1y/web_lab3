@@ -1,0 +1,22 @@
+#main > * {
+    text-align: left;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    margin-left: 3%;
+}
+
+body #results {
+    margin: 20px auto;
+    min-height: 100%;
+    max-width: max-content;
+}
+
+#main #graphic {
+    border: 1px solid black;
+    margin: 5px 0;
+}
+
+canvas {
+    cursor: pointer;
+}
