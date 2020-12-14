@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head />
+
+<h:body>
+    <ui:composition>
+        <div id="graphic">
+            <h:graphicImage width="223" height="219" alt="${msg.graphAlt}" />
+        </div>
+        <f:ajax event="action" render="results-table error-R error-Y" execute="param">
+            <h:form id="param" prependId="false">
+                <p>
+                    <h:panelGrid columns="#{conditions.xValues.size() + 1}">
+                        <h:outputText value="${msg.coordX}: "/>
+                        <ui:repeat value="#{conditions.xValues}" var="value">
+                            <h:commandButton type="button" styleClass="button-X choose" value="#{value}"/>
+                        </ui:repeat>
+                    </h:panelGrid>
+                    <h:inputHidden id="input-X" value="#{params.newPoint.x}" converter="stolexiy.DoubleConverter" />
+                </p>
+                <p>
+                    <h:outputLabel for="input-Y" value="${msg.coordY}: " />
+                    <h:inputText required="true" id="input-Y" value="#{params.newPoint.y}" styleClass="choose">
+                        <f:validateDoubleRange minimum="#{conditions.YMin}" maximum="#{conditions.YMax}"/>
+                        <f:converter converterId="javax.faces.Character" />
+                        <f:converter converterId="stolexiy.DoubleConverter" />
+                    </h:inputText>
+                    <h:inputHidden id="_input-Y" value="#{params.newPoint.y}" converter="stolexiy.DoubleConverter" />
+                    <h:message styleClass="error" id="error-Y" for="input-Y" />
+                </p>
+
+                <p>
+                    <h:panelGrid columns="#{conditions.rValues.size() + 1}">
+                        <h:outputText value="${msg.paramR}: "/>
+                        <ui:repeat value="#{conditions.rValues}" var="value">
+                            <h:outputLabel>
+                                <h:selectBooleanCheckbox id="R-#{conditions.rValues.indexOf(value)}" label="#{value}" styleClass="button-R choose" title="#{value}" />
+                                <h:outputText styleClass="label" value="#{value}"/>
+                            </h:outputLabel>
+                        </ui:repeat>
+                    </h:panelGrid>
+                    <h:message styleClass="error" id="error-R" for="input-R" />
+                    <h:inputHidden id="input-R" value="#{params.newPoint.r}" converter="stolexiy.DoubleConverter" />
+                </p>
+                <h:commandButton styleClass="choose dark" id="button-submit" value="${msg.check}" action="#{params.submit}"/>
+            </h:form>
+            <div id="results">
+                <h:dataTable id="results-table" value="#{params.points}" var="point">
+                    <h:column>
+                        <f:facet name="header">#{msg.receiveDate}</f:facet>
+                        <h:outputText value="#{point.nowStr}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">#{msg.exec}</f:facet>
+                        <h:outputText value="#{point.leadTime}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">#{msg.coordX}</f:facet>
+                        <h:outputText value="#{point.numberToLocaleString(point.x)}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">#{msg.coordY}</f:facet>
+                        <h:outputText value="#{point.numberToLocaleString(point.y)}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">#{msg.paramR}</f:facet>
+                        <h:outputText value="#{point.numberToLocaleString(point.r)}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">#{msg.result}</f:facet>
+                        <h:outputText value="${point.hitStr}" />
+                    </h:column>
+                </h:dataTable>
+            </div>
+        </f:ajax>
+    </ui:composition>
+
+</h:body>
+
+</html>

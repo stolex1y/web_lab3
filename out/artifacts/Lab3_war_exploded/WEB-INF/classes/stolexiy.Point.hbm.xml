@@ -1,0 +1,26 @@
+<!--
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name = "stolexiy.Point" table="RESULTS">
+        <meta attribute="class-description">
+            Данный класс содержит информацию о результатах проверок точки на
+            принадлежность графику
+        </meta>
+
+        <id name="id" type="long" column="id">
+            <generator class="native" />
+        </id>
+        
+        <property name="login" column="login" type="string"/>
+        <property name="now" column="date" type="timestamp"/>
+        <property name="leadTime" column="lead_time" type="long"/>
+        <property name="x" column="x" type="double"/>
+        <property name="y" column="y" type="double"/>
+        <property name="r" column="r" type="double"/>
+        <property name="hit" column="hit" type="boolean"/>
+    </class>
+</hibernate-mapping>-->
